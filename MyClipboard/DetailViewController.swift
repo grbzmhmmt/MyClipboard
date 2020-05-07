@@ -23,15 +23,37 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
         
         cameraImageView.isUserInteractionEnabled = true
-        cameraImageView.image = UIImage(named: "camera_icon_dark")
-        voiceImageView.image = UIImage(named: "mic_icon_dark")
         imagePicker.delegate = self
+        SelectMode()
         
-        var cameraGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SelectCameraImage))
+        let cameraGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SelectCameraImage))
         cameraImageView.addGestureRecognizer(cameraGestureRecognizer)
         
-        var voiceGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StartVoiceRecognizer))
+        let voiceGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StartVoiceRecognizer))
         voiceImageView.addGestureRecognizer(voiceGestureRecognizer)
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        let mode = traitCollection.userInterfaceStyle
+        if mode == .dark {
+            cameraImageView.image = UIImage(named: "camera_icon_light")
+            voiceImageView.image = UIImage(named: "mic_icon_light")
+        } else {
+            cameraImageView.image = UIImage(named: "camera_icon_dark")
+            voiceImageView.image = UIImage(named: "mic_icon_dark")
+        }
+               
+    }
+    
+    func SelectMode() {
+        let mode = traitCollection.userInterfaceStyle
+        if mode == .dark {
+            cameraImageView.image = UIImage(named: "camera_icon_light")
+            voiceImageView.image = UIImage(named: "mic_icon_light")
+        } else {
+            cameraImageView.image = UIImage(named: "camera_icon_dark")
+            voiceImageView.image = UIImage(named: "mic_icon_dark")
+        }
     }
     
     @objc func SelectCameraImage() {
@@ -43,7 +65,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        cameraImageView.image = info[.editedImage] as! UIImage
+        cameraImageView.image = info[.editedImage] as? UIImage
         self.dismiss(animated: true, completion: nil)
     }
     
