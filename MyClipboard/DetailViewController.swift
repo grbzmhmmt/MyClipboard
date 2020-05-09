@@ -40,8 +40,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         if choosenNoteName == "" {
             btnUpdate.isHidden = true
         } else{
-            captionText.text = choosenNoteName
             btnSave.isHidden = true
+            GetData()
+            
         }
         
     }
@@ -93,7 +94,6 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let context = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.insertNewObject(forEntityName: "MyNotes", into: context)
         
-        
         if captionText.text != "" {
             if let caption = captionText.text {
                 if let comment = commentText.text {
@@ -107,7 +107,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                     do {
                         try context.save()
                         print("Success")
-
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadTableView"), object: nil)
+                        navigationController?.popViewController(animated: true)
                     } catch {
                         print("Error")
                     }
@@ -117,8 +118,36 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         } else {
             ShowAlert(title: "Error", subTitle: "Caption is not be empty")
         }
+    }
+    
+    func GetData() {
         
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSFetchRequest<NSFetchRequestResult>(entityName: "MyNotes")
+        entity.predicate = NSPredicate(format: "id = %@", choosenNoteId!)
         
+        do {
+            let results = try context.fetch(entity)
+            
+            if results.count > 0 {
+                
+                for result in results as! [NSManagedObject]{
+                    
+                    captionText.text = choosenNoteName
+                    
+                    if let comment = result.value(forKey: "comment") as? String {
+                        commentText.text = comment
+                    }
+                    if let imageData = result.value(forKey: "image") as? Data {
+                        cameraImageView.image = UIImage(data: imageData)
+                    }
+                }
+            }
+            
+        } catch {
+            print("Error data dont fetch")
+        }
         
         
         

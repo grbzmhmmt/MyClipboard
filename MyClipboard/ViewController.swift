@@ -31,6 +31,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(UpdateTableData), name: NSNotification.Name(rawValue: "reloadTableView"), object: nil)
+    }
+    
+    @objc func UpdateTableData() {
+        GetData()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return noteCaptionArr.count
     }
