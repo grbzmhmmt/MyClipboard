@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     
     
     var noteCaptionArr = [String]()
@@ -22,6 +22,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "My Clipboard App"
+        
         navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(AddNewNote))
         
         tableView.delegate = self
@@ -29,6 +31,41 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         GetData()
         
+        let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
+        longPressGesture.minimumPressDuration = 2 // 2 second press
+        longPressGesture.delegate = self
+        tableView.addGestureRecognizer(longPressGesture)
+        
+    }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                
+                var selectedRow = Int(indexPath[1])
+                
+                print("noteCaptionArr", noteCaptionArr.count)
+                print("noteIdArr", noteIdArr.count)
+                
+                selectedNoteId = noteIdArr[selectedRow]
+                selectedNoteName = noteCaptionArr[selectedRow]
+                
+                let selectedItemCommnentText = GetDataComment()
+                
+                // set up activity view controller
+                let textToShare = [ selectedItemCommnentText ]
+                let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+                activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+                // exclude some activity types from the list (optional)
+                activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+
+                // present the view controller
+                self.present(activityViewController, animated: true, completion: nil)
+
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,7 +111,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func GetData() {
-        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let entity = NSFetchRequest<NSFetchRequestResult>(entityName: "MyNotes")
@@ -87,24 +123,89 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 noteCaptionArr.removeAll(keepingCapacity: false)
                 
                 for result in results as! [NSManagedObject]{
-                    
                     if let caption = result.value(forKey: "caption") as? String{
                         noteCaptionArr.append(caption)
                     }
                     if let id = result.value(forKey: "id") as? UUID {
                         noteIdArr.append(id.uuidString)
                     }
-                    
                 }
                 tableView.reloadData()
             }
-            
         } catch {
             print("Error Datas Cnat Fetching")
         }
+    }
+    
+    func GetDataComment() -> String {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSFetchRequest<NSFetchRequestResult>(entityName: "MyNotes")
+        entity.predicate = NSPredicate(format: "id = %@", selectedNoteId!)
         
-        
+        do {
+            let results = try context.fetch(entity)
+            
+            if results.count > 0 {
+                for result in results as! [NSManagedObject]{
+                    
+                    if let id = result.value(forKey: "id") as? UUID {
+                        if id.uuidString == selectedNoteId {
+                            if let comment = result.value(forKey: "comment") as? String{
+                                return comment
+                            }
+                        }
+                    }
+                }
+            }
+        } catch {
+            print("Error Datas Cnat Fetching")
+        }
+        return "Data Cant find! Please try again!"
     }
 
 }
+
+/*
+ 
+ 
+ 
+ @IBAction func shareTextButton(_ sender: UIButton) {
+
+     // text to share
+     let text = "This is some text that I want to share."
+
+     // set up activity view controller
+     let textToShare = [ text ]
+     let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+     activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+     // exclude some activity types from the list (optional)
+     activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+
+     // present the view controller
+     self.present(activityViewController, animated: true, completion: nil)
+
+ }
+
+ // share image
+ @IBAction func shareImageButton(_ sender: UIButton) {
+
+     // image to share
+     let image = UIImage(named: "Image")
+
+     // set up activity view controller
+     let imageToShare = [ image! ]
+     let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+     activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+     // exclude some activity types from the list (optional)
+     activityViewController.excludedActivityTypes = [ UIActivityType.airDrop, UIActivityType.postToFacebook ]
+
+     // present the view controller
+     self.present(activityViewController, animated: true, completion: nil)
+ }
+ 
+ 
+ */
 
