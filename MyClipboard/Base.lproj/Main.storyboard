@@ -70,15 +70,33 @@
                                 <rect key="frame" x="343" y="234" width="51" height="49"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0t-Kp-TXu">
+                                <rect key="frame" x="143" y="491" width="129" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="SaveButtonClick:" destination="QMG-AF-Xlb" eventType="touchUpInside" id="W60-aD-RLU"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmg-Jn-vnp">
+                                <rect key="frame" x="143" y="491" width="129" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Update"/>
+                                <connections>
+                                    <action selector="btnUpdateClick:" destination="QMG-AF-Xlb" eventType="touchUpInside" id="yLo-ZP-hKs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="P7J-UF-7xL"/>
                     </view>
                     <navigationItem key="navigationItem" id="HYW-aq-5M1"/>
                     <connections>
+                        <outlet property="btnSave" destination="h0t-Kp-TXu" id="HZf-ZA-w6p"/>
+                        <outlet property="btnUpdate" destination="wmg-Jn-vnp" id="cxx-SD-Y36"/>
                         <outlet property="cameraImageView" destination="iPN-qL-9QH" id="4oO-Ff-QJz"/>
                         <outlet property="captionText" destination="VHH-It-2e9" id="T35-X8-DRy"/>
-                        <outlet property="commnetText" destination="H8y-YM-eg9" id="jzn-mx-Cfl"/>
+                        <outlet property="commentText" destination="H8y-YM-eg9" id="45M-bE-PVH"/>
                         <outlet property="voiceImageView" destination="Eqj-ad-tnt" id="1I2-R0-Vr2"/>
                     </connections>
                 </viewController>

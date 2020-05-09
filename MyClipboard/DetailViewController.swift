@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Speech
+import CoreData
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -15,9 +17,12 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     var imagePicker = UIImagePickerController()
     
     @IBOutlet weak var captionText: UITextField!
-    @IBOutlet weak var commnetText: UITextView!
+    
+    @IBOutlet weak var commentText: UITextView!
     @IBOutlet weak var cameraImageView: UIImageView!
     @IBOutlet weak var voiceImageView: UIImageView!
+    @IBOutlet weak var btnSave: UIButton!
+    @IBOutlet weak var btnUpdate: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +36,14 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         let voiceGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StartVoiceRecognizer))
         voiceImageView.addGestureRecognizer(voiceGestureRecognizer)
+        
+        if choosenNoteName == "" {
+            btnUpdate.isHidden = true
+        } else{
+            captionText.text = choosenNoteName
+            btnSave.isHidden = true
+        }
+        
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -74,4 +87,62 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         
     }
 
+    @IBAction func SaveButtonClick(_ sender: Any) {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSEntityDescription.insertNewObject(forEntityName: "MyNotes", into: context)
+        
+        
+        if captionText.text != "" {
+            if let caption = captionText.text {
+                if let comment = commentText.text {
+                    if let image = cameraImageView.image?.jpegData(compressionQuality: 0.5) as? Data{
+                        entity.setValue(image, forKey: "image")
+                    }
+                    entity.setValue(caption, forKey: "caption")
+                    entity.setValue(comment, forKey: "comment")
+                    entity.setValue(UUID(), forKey: "id")
+                    
+                    do {
+                        try context.save()
+                        print("Success")
+
+                    } catch {
+                        print("Error")
+                    }
+                }
+            }
+            
+        } else {
+            ShowAlert(title: "Error", subTitle: "Caption is not be empty")
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    @IBAction func btnUpdateClick(_ sender: Any) {
+        
+        
+    }
+    
+    
+    func ShowAlert(title: String, subTitle: String) {
+        let alert = UIAlertController(title: title, message: subTitle, preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+        alert.addAction(okButton)
+        present(alert, animated: true, completion: nil)
+        
+        
+    }
+    
+    
+    
+    
+    
 }
