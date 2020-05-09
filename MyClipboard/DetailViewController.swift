@@ -148,14 +148,47 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         } catch {
             print("Error data dont fetch")
         }
-        
-        
-        
-        
     }
     
     
     @IBAction func btnUpdateClick(_ sender: Any) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let entity = NSFetchRequest<NSFetchRequestResult>(entityName: "MyNotes")
+        entity.predicate = NSPredicate(format: "id = %@", choosenNoteId!)
+        
+        do {
+            let results = try context.fetch(entity)
+            if results.count > 0 {
+                let result = results[0] as! NSManagedObject
+                
+                if captionText.text != "" {
+                    if let caption = captionText.text {
+                        if let comment = commentText.text {
+                            
+                            result.setValue(caption, forKey: "caption")
+                            result.setValue(comment, forKey: "comment")
+                            if let image = cameraImageView.image?.jpegData(compressionQuality: 0.5) as? Data{
+                                result.setValue(image, forKey: "image")
+                            }
+                            do {
+                                try context.save()
+                                print("Success")
+                                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadTableView"), object: nil)
+                                navigationController?.popViewController(animated: true)
+                            } catch {
+                                print("Error")
+                            }
+                        }
+                    }
+                } else {
+                    ShowAlert(title: "Error", subTitle: "Caption is not be empty")
+                }
+            }
+        } catch {
+            print("Error")
+        }
+        
         
         
     }
