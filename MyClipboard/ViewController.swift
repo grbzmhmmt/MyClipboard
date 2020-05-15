@@ -134,8 +134,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = noteCaptionArr[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! NotesTableViewCell
+        //let cell = UITableViewCell()
+        cell.noteId = noteIdArr[indexPath.row]
+        cell.noteNameLabel.text = noteCaptionArr[indexPath.row]
         return cell
     }
         
