@@ -9,9 +9,16 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, UIGestureRecognizerDelegate {
+    //Todo! Yapılacaklar
+    /*
+     Cell View Update edilecek
+     CameraImage view gesturerecognizer eklenecek
+     Voice eklenecek
+     Alternatif uygulamalar incelenecek
     
     
+    */
     var noteCaptionArr = [String]()
     var noteIdArr = [String]()
     var selectedNoteId: String?
@@ -38,35 +45,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
-    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
-        if gestureRecognizer.state == .began {
-            let touchPoint = gestureRecognizer.location(in: tableView)
-            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
-                
-                var selectedRow = Int(indexPath[1])
-                
-                print("noteCaptionArr", noteCaptionArr.count)
-                print("noteIdArr", noteIdArr.count)
-                
-                selectedNoteId = noteIdArr[selectedRow]
-                selectedNoteName = noteCaptionArr[selectedRow]
-                
-                let selectedItemCommnentText = GetDataComment()
-                
-                // set up activity view controller
-                let textToShare = [ selectedItemCommnentText ]
-                let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-                activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-
-                // exclude some activity types from the list (optional)
-                activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
-
-                // present the view controller
-                self.present(activityViewController, animated: true, completion: nil)
-
-            }
-        }
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(UpdateTableData), name: NSNotification.Name(rawValue: "reloadTableView"), object: nil)
@@ -76,24 +54,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         GetData()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return noteCaptionArr.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = noteCaptionArr[indexPath.row]
-        return cell
-    }
-        
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        selectedNoteName = noteCaptionArr[indexPath.row]
-        selectedNoteId = noteIdArr[indexPath.row]
-        performSegue(withIdentifier: "toDetailVC", sender: nil)
-        
-    }
-    
+
     @objc func AddNewNote() {
         selectedNoteName = ""
         performSegue(withIdentifier: "toDetailVC", sender: nil)
@@ -165,6 +126,61 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
 }
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return noteCaptionArr.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = noteCaptionArr[indexPath.row]
+        return cell
+    }
+        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectedNoteName = noteCaptionArr[indexPath.row]
+        selectedNoteId = noteIdArr[indexPath.row]
+        performSegue(withIdentifier: "toDetailVC", sender: nil)
+        
+    }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
+          if gestureRecognizer.state == .began {
+              let touchPoint = gestureRecognizer.location(in: tableView)
+              if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                  
+                  var selectedRow = Int(indexPath[1])
+                  
+                  print("noteCaptionArr", noteCaptionArr.count)
+                  print("noteIdArr", noteIdArr.count)
+                  
+                  selectedNoteId = noteIdArr[selectedRow]
+                  selectedNoteName = noteCaptionArr[selectedRow]
+                  
+                  let selectedItemCommnentText = GetDataComment()
+                  
+                  // set up activity view controller
+                  let textToShare = [ selectedItemCommnentText ]
+                  let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+                  activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+                  // exclude some activity types from the list (optional)
+                  activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+
+                  // present the view controller
+                  self.present(activityViewController, animated: true, completion: nil)
+
+              }
+          }
+      }
+    
+    
+}
+
+
 
 /*
  

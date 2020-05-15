@@ -47,6 +47,8 @@
 	<string>For Select Image</string>
 	<key>NSCameraUsageDescription</key>
 	<string>For Create Image</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

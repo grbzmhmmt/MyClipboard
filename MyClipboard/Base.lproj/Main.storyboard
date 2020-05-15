@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="IAR-cU-j1N">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,11 +12,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyClipboard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XXU-dW-b08">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="44" width="320" height="524"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </tableView>
                         </subviews>
@@ -44,43 +44,51 @@
             <objects>
                 <viewController id="QMG-AF-Xlb" customClass="DetailViewController" customModule="MyClipboard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HgS-jM-hhK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Caption" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VHH-It-2e9">
-                                <rect key="frame" x="20" y="121" width="374" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Caption" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VHH-It-2e9">
+                                <rect key="frame" x="10" y="64" width="284" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="Zc7-tP-4o3"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="H8y-YM-eg9">
-                                <rect key="frame" x="20" y="177" width="301" height="229"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="H8y-YM-eg9">
+                                <rect key="frame" x="10" y="120" width="241" height="229"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="229" id="e1q-Tx-Hvb"/>
+                                </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPN-qL-9QH">
-                                <rect key="frame" x="343" y="177" width="51" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iPN-qL-9QH">
+                                <rect key="frame" x="259" y="120" width="51" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="49" id="cGy-Ff-mRi"/>
+                                    <constraint firstAttribute="width" constant="51" id="d4h-nk-m2K"/>
+                                    <constraint firstAttribute="height" constant="49" id="nxx-jM-hed"/>
+                                </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eqj-ad-tnt">
-                                <rect key="frame" x="343" y="234" width="51" height="49"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Eqj-ad-tnt">
+                                <rect key="frame" x="259" y="177" width="51" height="49"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="PaT-YU-0c5"/>
+                                </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0t-Kp-TXu">
-                                <rect key="frame" x="143" y="491" width="129" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0t-Kp-TXu">
+                                <rect key="frame" x="88" y="423" width="129" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
                                     <action selector="SaveButtonClick:" destination="QMG-AF-Xlb" eventType="touchUpInside" id="W60-aD-RLU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmg-Jn-vnp">
-                                <rect key="frame" x="143" y="491" width="129" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmg-Jn-vnp">
+                                <rect key="frame" x="88" y="423" width="129" height="30"/>
                                 <state key="normal" title="Update"/>
                                 <connections>
                                     <action selector="btnUpdateClick:" destination="QMG-AF-Xlb" eventType="touchUpInside" id="yLo-ZP-hKs"/>
@@ -88,6 +96,32 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="h0t-Kp-TXu" firstAttribute="trailing" secondItem="wmg-Jn-vnp" secondAttribute="trailing" id="0tX-d4-IvV"/>
+                            <constraint firstItem="iPN-qL-9QH" firstAttribute="leading" secondItem="H8y-YM-eg9" secondAttribute="trailing" constant="8" id="0wm-rT-oHi"/>
+                            <constraint firstItem="P7J-UF-7xL" firstAttribute="trailing" secondItem="iPN-qL-9QH" secondAttribute="trailing" constant="10" id="AQd-n9-UPb"/>
+                            <constraint firstItem="wmg-Jn-vnp" firstAttribute="baseline" secondItem="h0t-Kp-TXu" secondAttribute="baseline" id="Af3-oI-JqA"/>
+                            <constraint firstItem="VHH-It-2e9" firstAttribute="leading" secondItem="P7J-UF-7xL" secondAttribute="leading" constant="10" id="Com-1a-rtZ"/>
+                            <constraint firstItem="wmg-Jn-vnp" firstAttribute="leading" secondItem="h0t-Kp-TXu" secondAttribute="leading" id="Fhr-A9-ot1"/>
+                            <constraint firstItem="P7J-UF-7xL" firstAttribute="trailing" secondItem="iPN-qL-9QH" secondAttribute="trailing" constant="10" id="GBC-bj-07G"/>
+                            <constraint firstItem="VHH-It-2e9" firstAttribute="top" secondItem="P7J-UF-7xL" secondAttribute="top" constant="20" id="K7f-1L-BT9"/>
+                            <constraint firstItem="iPN-qL-9QH" firstAttribute="leading" secondItem="H8y-YM-eg9" secondAttribute="trailing" constant="8" id="KTo-V2-v9a"/>
+                            <constraint firstItem="Eqj-ad-tnt" firstAttribute="leading" secondItem="H8y-YM-eg9" secondAttribute="trailing" constant="8" id="Lbp-BK-Tmw"/>
+                            <constraint firstItem="P7J-UF-7xL" firstAttribute="trailing" secondItem="VHH-It-2e9" secondAttribute="trailing" constant="26" id="MMP-d7-4fl"/>
+                            <constraint firstItem="P7J-UF-7xL" firstAttribute="trailing" secondItem="Eqj-ad-tnt" secondAttribute="trailing" constant="10" id="MXX-Jf-YA1"/>
+                            <constraint firstItem="iPN-qL-9QH" firstAttribute="leading" secondItem="Eqj-ad-tnt" secondAttribute="leading" id="TwP-L1-swk"/>
+                            <constraint firstItem="h0t-Kp-TXu" firstAttribute="leading" secondItem="P7J-UF-7xL" secondAttribute="leading" constant="88" id="aa8-9Q-jm1"/>
+                            <constraint firstItem="Eqj-ad-tnt" firstAttribute="top" secondItem="iPN-qL-9QH" secondAttribute="bottom" constant="8" id="bKx-p9-6HI"/>
+                            <constraint firstItem="H8y-YM-eg9" firstAttribute="top" secondItem="iPN-qL-9QH" secondAttribute="top" id="dpF-NP-G04"/>
+                            <constraint firstItem="iPN-qL-9QH" firstAttribute="top" secondItem="VHH-It-2e9" secondAttribute="bottom" constant="22" id="dwd-xh-saw"/>
+                            <constraint firstItem="H8y-YM-eg9" firstAttribute="top" secondItem="VHH-It-2e9" secondAttribute="bottom" constant="22" id="fHM-7Q-pxj"/>
+                            <constraint firstItem="iPN-qL-9QH" firstAttribute="trailing" secondItem="Eqj-ad-tnt" secondAttribute="trailing" id="ga6-oz-ojW"/>
+                            <constraint firstItem="VHH-It-2e9" firstAttribute="centerX" secondItem="wmg-Jn-vnp" secondAttribute="centerX" id="h8W-Hi-DxN"/>
+                            <constraint firstItem="VHH-It-2e9" firstAttribute="leading" secondItem="H8y-YM-eg9" secondAttribute="leading" id="ohA-vz-ToQ"/>
+                            <constraint firstItem="h0t-Kp-TXu" firstAttribute="top" secondItem="H8y-YM-eg9" secondAttribute="bottom" constant="74" id="xdB-mP-7uC"/>
+                            <constraint firstItem="P7J-UF-7xL" firstAttribute="bottom" secondItem="h0t-Kp-TXu" secondAttribute="bottom" constant="115" id="yZR-IP-MKh"/>
+                            <constraint firstItem="Eqj-ad-tnt" firstAttribute="top" secondItem="iPN-qL-9QH" secondAttribute="bottom" constant="8" id="zEr-0L-PWg"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="P7J-UF-7xL"/>
                     </view>
                     <navigationItem key="navigationItem" id="HYW-aq-5M1"/>
@@ -102,7 +136,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEc-Df-7Rx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1831.8840579710147" y="126.5625"/>
+            <point key="canvasLocation" x="1830" y="125.70422535211267"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aaU-DL-9Kd">
@@ -110,8 +144,9 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="IAR-cU-j1N" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lL8-if-g9V">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
