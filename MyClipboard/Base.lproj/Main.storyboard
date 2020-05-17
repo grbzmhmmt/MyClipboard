@@ -77,10 +77,10 @@
             </objects>
             <point key="canvasLocation" x="1046.25" y="125.70422535211267"/>
         </scene>
-        <!--Detail View Controller-->
+        <!--DetailVC-->
         <scene sceneID="fbB-08-1Se">
             <objects>
-                <viewController id="QMG-AF-Xlb" customClass="DetailViewController" customModule="MyClipboard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="QMG-AF-Xlb" customClass="DetailVC" customModule="MyClipboard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HgS-jM-hhK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

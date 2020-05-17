@@ -10,7 +10,7 @@ import UIKit
 import Speech
 import CoreData
 
-class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var imagePicker = UIImagePickerController()
     
@@ -120,7 +120,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                         try context.save()
                         print("Success")
                         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reloadTableView"), object: nil)
-                        navigationController?.popViewController(animated: true)
+                        performSegue(withIdentifier: "toNotesVC", sender: nil)
                     } catch {
                         print("Error")
                     }

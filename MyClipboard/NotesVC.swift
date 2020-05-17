@@ -9,7 +9,19 @@
 import UIKit
 import CoreData
 
-class NotesVC: UIViewController, UIGestureRecognizerDelegate {
+class NotesVC: UIViewController, UIGestureRecognizerDelegate, NotesTableViewCellDelegate {
+
+    func PlayShowAlert(time: Int, title: String, subtitle: String) {
+        let alert = UIAlertController(title: title, message: subtitle, preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+
+        // change to desired number of seconds (in this case 5 seconds)
+        let when = DispatchTime.now() + 2
+        DispatchQueue.main.asyncAfter(deadline: when){
+          // your code with delay
+          alert.dismiss(animated: true, completion: nil)
+        }
+    }
     //Todo! Yapılacaklar
     /*
      Cell View Update edilecek
@@ -33,9 +45,7 @@ class NotesVC: UIViewController, UIGestureRecognizerDelegate {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        GetData()
-        
+                
         let longPressGesture:UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
         longPressGesture.minimumPressDuration = 2 // 2 second press
         longPressGesture.delegate = self
@@ -46,6 +56,7 @@ class NotesVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         NotificationCenter.default.addObserver(self, selector: #selector(UpdateTableData), name: NSNotification.Name(rawValue: "reloadTableView"), object: nil)
+        GetData()
     }
     
     @objc func UpdateTableData() {
@@ -60,7 +71,7 @@ class NotesVC: UIViewController, UIGestureRecognizerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailVC" {
-            if let destinationVC = segue.destination as? DetailViewController {
+            if let destinationVC = segue.destination as? DetailVC {
                 
             }
             
@@ -132,6 +143,7 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! NotesTableViewCell
+        cell.alertDelegate = self
         //let cell = UITableViewCell()
         cell.noteId = noteIdArr[indexPath.row]
         cell.noteNameLabel.text = noteCaptionArr[indexPath.row]
@@ -175,6 +187,10 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource {
               }
           }
       }
+    
+    func ShowAlertWithTime() {
+        
+    }
     
     
 }
