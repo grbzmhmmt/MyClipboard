@@ -171,10 +171,10 @@ extension NotesVC: UITableViewDelegate, UITableViewDataSource {
                   NotesModule.instanceClone.noteId = noteIdArr[selectedRow]
                   NotesModule.instanceClone.noteCaption = noteCaptionArr[selectedRow]
                   
-                  let selectedItemCommnentText = GetDataComment()
+                  let selectedItemCommentText = GetDataComment()
                   
                   // set up activity view controller
-                  let textToShare = [ selectedItemCommnentText ]
+                  let textToShare = [ selectedItemCommentText ]
                   let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
                   activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
 

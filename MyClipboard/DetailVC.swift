@@ -28,12 +28,9 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         imagePicker.delegate = self
         SelectMode()
         
-        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(ShareNoteClick))
-        
         navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "< Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(BackButtonClicked))
         
         navigationItem.leftBarButtonItem?.tintColor = UIColor.red
-        navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         
         let cameraGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SelectCameraImage))
         cameraImageView.addGestureRecognizer(cameraGestureRecognizer)
@@ -46,13 +43,26 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         } else{
             btnSave.isHidden = true
             GetData()
-            
+            navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(ShareNoteClick))
+            navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         }
         
     }
     
     @objc func ShareNoteClick() {
         print("Share Icon Clicked")
+            // set up activity view controller
+        let textToShare = [ commentText.text ]
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+        // exclude some activity types from the list (optional)
+        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+
+        // present the view controller
+        self.present(activityViewController, animated: true, completion: nil)
+
+    
     }
     
     @objc func BackButtonClicked() {
