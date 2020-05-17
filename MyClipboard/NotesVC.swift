@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate {
+class NotesVC: UIViewController, UIGestureRecognizerDelegate {
     //Todo! Yapılacaklar
     /*
      Cell View Update edilecek
@@ -21,8 +21,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     */
     var noteCaptionArr = [String]()
     var noteIdArr = [String]()
-    var selectedNoteId: String?
-    var selectedNoteName: String?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -56,15 +54,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
 
     @objc func AddNewNote() {
-        selectedNoteName = ""
+        NotesModule.instanceClone.noteCaption = ""
         performSegue(withIdentifier: "toDetailVC", sender: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailVC" {
             if let destinationVC = segue.destination as? DetailViewController {
-                destinationVC.choosenNoteId = selectedNoteId
-                destinationVC.choosenNoteName = selectedNoteName
                 
             }
             
@@ -102,7 +98,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let entity = NSFetchRequest<NSFetchRequestResult>(entityName: "MyNotes")
-        entity.predicate = NSPredicate(format: "id = %@", selectedNoteId!)
+        entity.predicate = NSPredicate(format: "id = %@", NotesModule.instanceClone.noteId)
         
         do {
             let results = try context.fetch(entity)
@@ -111,7 +107,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
                 for result in results as! [NSManagedObject]{
                     
                     if let id = result.value(forKey: "id") as? UUID {
-                        if id.uuidString == selectedNoteId {
+                        if id.uuidString == NotesModule.instanceClone.noteId {
                             if let comment = result.value(forKey: "comment") as? String{
                                 return comment
                             }
@@ -127,7 +123,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
 
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension NotesVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return noteCaptionArr.count
@@ -144,8 +140,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        selectedNoteName = noteCaptionArr[indexPath.row]
-        selectedNoteId = noteIdArr[indexPath.row]
+        NotesModule.instanceClone.noteCaption = noteCaptionArr[indexPath.row]
+        NotesModule.instanceClone.noteId = noteIdArr[indexPath.row]
         performSegue(withIdentifier: "toDetailVC", sender: nil)
         
     }
@@ -160,8 +156,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                   print("noteCaptionArr", noteCaptionArr.count)
                   print("noteIdArr", noteIdArr.count)
                   
-                  selectedNoteId = noteIdArr[selectedRow]
-                  selectedNoteName = noteCaptionArr[selectedRow]
+                  NotesModule.instanceClone.noteId = noteIdArr[selectedRow]
+                  NotesModule.instanceClone.noteCaption = noteCaptionArr[selectedRow]
                   
                   let selectedItemCommnentText = GetDataComment()
                   

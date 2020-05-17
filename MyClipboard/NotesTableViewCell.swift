@@ -28,7 +28,7 @@ class NotesTableViewCell: UITableViewCell {
     }
     
     @objc func CopyComment() {
-        print(noteId, noteNameLabel.text)
+        print(noteId, noteNameLabel.text, "mumi")
     }
 
 }

@@ -12,12 +12,9 @@ import CoreData
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var choosenNoteId: String?
-    var choosenNoteName: String?
     var imagePicker = UIImagePickerController()
     
     @IBOutlet weak var captionText: UITextField!
-    
     @IBOutlet weak var commentText: UITextView!
     @IBOutlet weak var cameraImageView: UIImageView!
     @IBOutlet weak var voiceImageView: UIImageView!
@@ -31,13 +28,20 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         imagePicker.delegate = self
         SelectMode()
         
+        navigationController?.navigationBar.topItem?.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.action, target: self, action: #selector(ShareNoteClick))
+        
+        navigationController?.navigationBar.topItem?.leftBarButtonItem = UIBarButtonItem(title: "< Back", style: UIBarButtonItem.Style.plain, target: self, action: #selector(BackButtonClicked))
+        
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.red
+        navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+        
         let cameraGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SelectCameraImage))
         cameraImageView.addGestureRecognizer(cameraGestureRecognizer)
         
         let voiceGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StartVoiceRecognizer))
         voiceImageView.addGestureRecognizer(voiceGestureRecognizer)
         
-        if choosenNoteName == "" {
+        if NotesModule.instanceClone.noteCaption == "" {
             btnUpdate.isHidden = true
         } else{
             btnSave.isHidden = true
@@ -45,6 +49,14 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             
         }
         
+    }
+    
+    @objc func ShareNoteClick() {
+        print("Share Icon Clicked")
+    }
+    
+    @objc func BackButtonClicked() {
+        performSegue(withIdentifier: "toNotesVC", sender: nil)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -125,7 +137,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let entity = NSFetchRequest<NSFetchRequestResult>(entityName: "MyNotes")
-        entity.predicate = NSPredicate(format: "id = %@", choosenNoteId!)
+        entity.predicate = NSPredicate(format: "id = %@", NotesModule.instanceClone.noteId)
         
         do {
             let results = try context.fetch(entity)
@@ -134,7 +146,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                 
                 for result in results as! [NSManagedObject]{
                     
-                    captionText.text = choosenNoteName
+                    captionText.text = NotesModule.instanceClone.noteCaption
                     
                     if let comment = result.value(forKey: "comment") as? String {
                         commentText.text = comment
@@ -155,7 +167,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         let entity = NSFetchRequest<NSFetchRequestResult>(entityName: "MyNotes")
-        entity.predicate = NSPredicate(format: "id = %@", choosenNoteId!)
+        entity.predicate = NSPredicate(format: "id = %@", NotesModule.instanceClone.noteId)
         
         do {
             let results = try context.fetch(entity)

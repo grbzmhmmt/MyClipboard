@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		E02A3B50246495DD00974262 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02A3B4F246495DD00974262 /* AppDelegate.swift */; };
 		E02A3B52246495DD00974262 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02A3B51246495DD00974262 /* SceneDelegate.swift */; };
-		E02A3B54246495DD00974262 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02A3B53246495DD00974262 /* ViewController.swift */; };
+		E02A3B54246495DD00974262 /* NotesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02A3B53246495DD00974262 /* NotesVC.swift */; };
 		E02A3B57246495DD00974262 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E02A3B55246495DD00974262 /* Main.storyboard */; };
 		E02A3B5A246495DD00974262 /* MyClipboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E02A3B58246495DD00974262 /* MyClipboard.xcdatamodeld */; };
 		E02A3B5C246495DF00974262 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E02A3B5B246495DF00974262 /* Assets.xcassets */; };
 		E02A3B5F246495E000974262 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E02A3B5D246495E000974262 /* LaunchScreen.storyboard */; };
 		E02A3B6724649F2500974262 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02A3B6624649F2500974262 /* DetailViewController.swift */; };
+		E054B4EA2471A2F5008FF955 /* NotesModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = E054B4E92471A2F5008FF955 /* NotesModule.swift */; };
 		E061D745246EC7BA002740BD /* NotesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E061D744246EC7BA002740BD /* NotesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -22,13 +23,14 @@
 		E02A3B4C246495DD00974262 /* MyClipboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyClipboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E02A3B4F246495DD00974262 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E02A3B51246495DD00974262 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E02A3B53246495DD00974262 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E02A3B53246495DD00974262 /* NotesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesVC.swift; sourceTree = "<group>"; };
 		E02A3B56246495DD00974262 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E02A3B59246495DD00974262 /* MyClipboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MyClipboard.xcdatamodel; sourceTree = "<group>"; };
 		E02A3B5B246495DF00974262 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E02A3B5E246495E000974262 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E02A3B60246495E000974262 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E02A3B6624649F2500974262 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		E054B4E92471A2F5008FF955 /* NotesModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesModule.swift; sourceTree = "<group>"; };
 		E061D744246EC7BA002740BD /* NotesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +66,7 @@
 			children = (
 				E02A3B4F246495DD00974262 /* AppDelegate.swift */,
 				E02A3B51246495DD00974262 /* SceneDelegate.swift */,
-				E02A3B53246495DD00974262 /* ViewController.swift */,
+				E02A3B53246495DD00974262 /* NotesVC.swift */,
 				E02A3B6624649F2500974262 /* DetailViewController.swift */,
 				E061D744246EC7BA002740BD /* NotesTableViewCell.swift */,
 				E02A3B55246495DD00974262 /* Main.storyboard */,
@@ -72,6 +74,7 @@
 				E02A3B5D246495E000974262 /* LaunchScreen.storyboard */,
 				E02A3B60246495E000974262 /* Info.plist */,
 				E02A3B58246495DD00974262 /* MyClipboard.xcdatamodeld */,
+				E054B4E92471A2F5008FF955 /* NotesModule.swift */,
 			);
 			path = MyClipboard;
 			sourceTree = "<group>";
@@ -147,8 +150,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E02A3B54246495DD00974262 /* ViewController.swift in Sources */,
+				E02A3B54246495DD00974262 /* NotesVC.swift in Sources */,
 				E02A3B50246495DD00974262 /* AppDelegate.swift in Sources */,
+				E054B4EA2471A2F5008FF955 /* NotesModule.swift in Sources */,
 				E02A3B6724649F2500974262 /* DetailViewController.swift in Sources */,
 				E02A3B5A246495DD00974262 /* MyClipboard.xcdatamodeld in Sources */,
 				E02A3B52246495DD00974262 /* SceneDelegate.swift in Sources */,
