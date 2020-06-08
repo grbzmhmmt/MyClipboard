@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class NotesVC: UIViewController, UIGestureRecognizerDelegate, NotesTableViewCellDelegate {
-
+/*
     func PlayShowAlert(time: Int, title: String, subtitle: String) {
         let alert = UIAlertController(title: title, message: subtitle, preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)
@@ -22,6 +22,8 @@ class NotesVC: UIViewController, UIGestureRecognizerDelegate, NotesTableViewCell
           alert.dismiss(animated: true, completion: nil)
         }
     }
+ 
+ */
     //Todo! Yapılacaklar
     /*
      Cell View Update edilecek

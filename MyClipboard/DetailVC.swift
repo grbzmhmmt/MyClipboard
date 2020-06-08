@@ -12,7 +12,9 @@ import CoreData
 
 class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    
     var imagePicker = UIImagePickerController()
+    var fontSize: Int = 14
     
     @IBOutlet weak var captionText: UITextField!
     @IBOutlet weak var commentText: UITextView!
@@ -20,6 +22,8 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var voiceImageView: UIImageView!
     @IBOutlet weak var btnSave: UIButton!
     @IBOutlet weak var btnUpdate: UIButton!
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var fontSizeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +51,7 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         }
         
+        
     }
     
     @objc func ShareNoteClick() {
@@ -54,10 +59,11 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             // set up activity view controller
         let textToShare = [ commentText.text ]
         let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        //activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
 
+        
         // exclude some activity types from the list (optional)
-        activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+        //activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop,UIActivity.ActivityType.message, UIActivity.ActivityType.postToFacebook ]
 
         // present the view controller
         self.present(activityViewController, animated: true, completion: nil)
@@ -125,7 +131,7 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                     entity.setValue(caption, forKey: "caption")
                     entity.setValue(comment, forKey: "comment")
                     entity.setValue(UUID(), forKey: "id")
-                    
+                    entity.setValue(fontSize, forKey: "fontsize")
                     do {
                         try context.save()
                         print("Success")
@@ -164,6 +170,12 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                     if let imageData = result.value(forKey: "image") as? Data {
                         cameraImageView.image = UIImage(data: imageData)
                     }
+                    if let fontsize = result.value(forKey: "fontsize") as? Int {
+                        fontSize = fontsize
+                        fontSizeLabel.text = "Font Size: \(fontsize)"
+                        commentText.font =  UIFont.init(name: (commentText.font?.fontName)!, size: CGFloat(fontsize))!
+                        slider.value = Float(fontsize)
+                    }
                 }
             }
             
@@ -190,6 +202,7 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                             
                             result.setValue(caption, forKey: "caption")
                             result.setValue(comment, forKey: "comment")
+                            result.setValue(fontSize, forKey: "fontsize")
                             if let image = cameraImageView.image?.jpegData(compressionQuality: 0.5) as? Data{
                                 result.setValue(image, forKey: "image")
                             }
@@ -225,6 +238,18 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
     }
     
+    @IBAction func sliderChange(_ sender: UISlider) {
+        if let fontsize = Int(String(format: "%.0f", sender.value)) {
+            fontSize = fontsize
+            fontSizeLabel.text = "Font Size: \(fontsize)"
+            
+            commentText.font =  UIFont.init(name: "Courier", size: CGFloat(fontsize))!
+            
+        }
+        
+        
+        
+    }
     
     
     

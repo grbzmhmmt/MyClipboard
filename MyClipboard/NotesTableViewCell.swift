@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 protocol NotesTableViewCellDelegate {
-    func PlayShowAlert(time: Int, title: String, subtitle: String)
+    //func PlayShowAlert(time: Int, title: String, subtitle: String)
 }
 
 
@@ -51,7 +51,8 @@ class NotesTableViewCell: UITableViewCell {
                         let pasteboard = UIPasteboard.general
                         pasteboard.string = commentText
                         
-                        alertDelegate?.PlayShowAlert(time: 2, title: "Success", subtitle: "Coppied")
+                        //alertDelegate?.PlayShowAlert(time: 2, title: "Success", subtitle: "Coppied")
+                        PlayShowAlert(time: 2, title: "Success", subtitle: "Coppied")
                     }
                     
                 }
@@ -66,6 +67,20 @@ class NotesTableViewCell: UITableViewCell {
         print(noteId, noteNameLabel.text, "mumi")
     }
     
+    func PlayShowAlert(time: Int, title: String, subtitle: String) {
+        let alert = UIAlertController(title: title, message: subtitle, preferredStyle: .alert)
+        
+        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+        
+        //self.present(alert, animated: true, completion: nil)
+
+        // change to desired number of seconds (in this case 5 seconds)
+        let when = DispatchTime.now() + 2
+        DispatchQueue.main.asyncAfter(deadline: when){
+          // your code with delay
+          alert.dismiss(animated: true, completion: nil)
+        }
+    }
     
 
 }
