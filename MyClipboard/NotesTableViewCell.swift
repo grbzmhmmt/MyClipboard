@@ -27,12 +27,15 @@ class NotesTableViewCell: UITableViewCell {
         copyImageView.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CopyComment))
         copyImageView.addGestureRecognizer(gestureRecognizer)
+        
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
     }
+    
     
     @objc func CopyComment() {
         

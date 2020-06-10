@@ -39,6 +39,12 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
         let cameraGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SelectCameraImage))
         cameraImageView.addGestureRecognizer(cameraGestureRecognizer)
         
+        let cameraLongGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ShareCameraImage))
+        cameraLongGestureRecognizer.minimumPressDuration = 2
+        
+        cameraImageView.addGestureRecognizer(cameraLongGestureRecognizer)
+        cameraImageView.addGestureRecognizer(cameraGestureRecognizer)
+        
         let voiceGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(StartVoiceRecognizer))
         voiceImageView.addGestureRecognizer(voiceGestureRecognizer)
         
@@ -51,7 +57,29 @@ class DetailVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         }
         
+        let viewGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(finishEditing))
+        view.addGestureRecognizer(viewGestureRecognizer)
         
+    }
+    
+    @objc func ShareCameraImage() {
+        // image to share
+        let image = cameraImageView.image!
+
+         // set up activity view controller
+         let imageToShare = [ image ]
+         let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+         activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+
+         // exclude some activity types from the list (optional)
+        //activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+
+         // present the view controller
+         self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    @objc func finishEditing() {
+        view.endEditing(true)
     }
     
     @objc func ShareNoteClick() {
